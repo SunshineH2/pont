@@ -19,6 +19,11 @@
       "type": "string",
       "default": "./services"
     },
+    "interfaceType": {
+      "description": "whether to enable interface filtering",
+      "type": "string",
+      "default": ""
+    },
     "originUrl": {
       "$ref": "#/definitions/originUrl"
     },

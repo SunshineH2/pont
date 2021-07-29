@@ -220,8 +220,10 @@ export class MocksServer {
   /** 1. 检查是否存在mocks文件 */
   async checkMocksPath() {
     const rootPath = vscode.workspace.rootPath;
+    const configMocks = this.configMocks || { containDataSources: [] };
+    const containDataSources = configMocks.containDataSources || [];
 
-    this.configMocks.containDataSources.map(async containDataSource => {
+    containDataSources.map(async containDataSource => {
       /** 把mocks中配置的containDataSources与allConfigs中的数据源名称做匹配 */
       const currentConfig = this.manager.allConfigs.find(cof => cof.name === containDataSource);
       if (currentConfig) {
@@ -265,7 +267,7 @@ export class MocksServer {
   }
 
   async getMockData(url: string, method: string) {
-    const dataSources = this.configMocks.containDataSources;
+    const dataSources = this.configMocks.containDataSources || [];
     let data = null;
     for (const containDataSource of dataSources) {
       const ds = this.manager.allLocalDataSources.find(s => s.name === containDataSource);

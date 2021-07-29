@@ -176,6 +176,12 @@ Tips:
 
 描述：生成的代码会用 prettier 来美化。此处配置 prettier 的配置项即可，具体可以参考 [prettier 文档](https://prettier.io/docs/en/options.html)。
 
+#### interfaceType
+
+值类型：string
+
+描述：标志是否启用接口过滤。如："app"
+
 #### usingMultipleOrigins
 
 值类型：boolean
