@@ -1,4 +1,4 @@
-import { Manager, Interface } from 'pont-engine';
+import { Manager, Interface } from '@td-design/pont-engine';
 import * as vscode from 'vscode';
 import * as _ from 'lodash';
 import * as path from 'path';

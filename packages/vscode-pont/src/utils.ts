@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { Manager, Interface } from 'pont-engine';
+import { Manager, Interface } from '@td-design/pont-engine';
 import * as path from 'path';
 import * as child_process from 'child_process';
 import * as fs from 'fs';

@@ -1,6 +1,6 @@
-import { StandardDataSource, Interface, BaseClass, Manager, Config } from 'pont-engine';
-import { StandardDataType, Property, format } from 'pont-engine';
-import { DataSourceConfig, Mocks as MocksType } from 'pont-engine/lib/utils';
+import { StandardDataSource, Interface, BaseClass, Manager, Config } from '@td-design/pont-engine';
+import { StandardDataType, Property, format } from '@td-design/pont-engine';
+import { DataSourceConfig, Mocks as MocksType } from '@td-design/pont-engine/lib/utils';
 import * as http from 'http';
 import * as fs from 'fs-extra';
 import * as path from 'path';
