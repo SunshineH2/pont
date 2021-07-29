@@ -1,5 +1,5 @@
 {
-  "name": "td-pont-engine",
+  "name": "@td-design/pont-engine",
   "version": "1.0.1",
   "description": "pont swagger typescript API",
   "main": "lib/index.js",
@@ -41,6 +41,10 @@
     "typescript",
     "API"
   ],
-  "author": "huangshanshan",
-  "license": "MIT"
+  "author": "thundersdata-frontend",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/",
+    "access": "public"
+  }
 }

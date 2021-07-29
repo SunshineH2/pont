@@ -35,14 +35,16 @@ export function showProgress(title: string, manager: Manager, task: (report?: (i
 
 export async function syncNpm() {
   try {
-    const currVersion = require(path.join(__dirname, '../node_modules/pont-engine/package.json')).version;
-    const projectVersionPath = path.join(vscode.workspace.rootPath, 'node_modules/pont-engine/package.json');
+    const currVersion = require(path.join(__dirname, '../node_modules/@td-design/pont-engine/package.json')).version;
+    const projectVersionPath = path.join(vscode.workspace.rootPath, 'node_modules/@td-design/pont-engine/package.json');
     const yarnPath = path.join(vscode.workspace.rootPath, 'yarn.lock');
 
     const hasProjectVersion = fs.existsSync(projectVersionPath);
     const useYarn = fs.existsSync(yarnPath);
 
-    const cmd = useYarn ? 'yarn add -D pont-engine@' + currVersion : 'npm i -D pont-engine@' + currVersion;
+    const cmd = useYarn
+      ? 'yarn add -D @td-design/pont-engine@' + currVersion
+      : 'npm i -D @td-design/pont-engine@' + currVersion;
 
     if (!hasProjectVersion) {
       console.log(cmd);
