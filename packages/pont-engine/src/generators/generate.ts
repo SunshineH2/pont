@@ -28,19 +28,22 @@ export class FileStructures {
     private usingMultipleOrigins: boolean,
     private surrounding = Surrounding.typeScript,
     private baseDir = 'src/service',
-    private templateType = ''
-  ) { }
+    private templateType = '',
+    private interfaceType = ''
+  ) {}
 
+  /** 多数据源时的文件结构 */
   getMultipleOriginsFileStructures() {
-
     const files = {};
 
-    this.generators.filter(generator => generator.outDir === this.baseDir).forEach(generator => {
-      const dsName = generator.dataSource.name;
-      const dsFiles = this.getOriginFileStructures(generator, true);
+    this.generators
+      .filter(generator => generator.outDir === this.baseDir)
+      .forEach(generator => {
+        const dsName = generator.dataSource.name;
+        const dsFiles = this.getOriginFileStructures(generator, true);
 
-      files[dsName] = dsFiles;
-    });
+        files[dsName] = dsFiles;
+      });
 
     return {
       ...files,
@@ -50,6 +53,7 @@ export class FileStructures {
     };
   }
 
+  /** 获取class的声明文件 */
   getBaseClassesInDeclaration(originCode: string, usingMultipleOrigins: boolean) {
     if (usingMultipleOrigins) {
       return `
@@ -64,6 +68,7 @@ export class FileStructures {
     `;
   }
 
+  /** 获取mods的声明文件 */
   getModsDeclaration(originCode: string, usingMultipleOrigins: boolean) {
     if (usingMultipleOrigins) {
       return `
@@ -78,6 +83,7 @@ export class FileStructures {
     `;
   }
 
+  /** 获取单个数据源的文件结构 */
   getOriginFileStructures(generator: CodeGenerator, usingMultipleOrigins = false) {
     let mods = {};
     const dataSource = generator.dataSource;
@@ -87,12 +93,16 @@ export class FileStructures {
     dataSource.mods.forEach(mod => {
       const currMod = {};
 
-      mod.interfaces.forEach(inter => {
-        currMod[getFileName(inter.name, this.surrounding)] = generator.getInterfaceContent.bind(generator, inter);
-        currMod[indexFileName] = generator.getModIndex.bind(generator, mod);
-      });
-      const modName = reviseModName(mod.name);
-      mods[modName] = currMod;
+      mod.interfaces
+        .filter(curInter => (curInter.interfaceType || '') === this.interfaceType)
+        .forEach(inter => {
+          currMod[getFileName(inter.name, this.surrounding)] = generator.getInterfaceContent.bind(generator, inter);
+          currMod[indexFileName] = generator.getModIndex.bind(generator, mod);
+        });
+      if (mod.interfaces.some(inter => (inter.interfaceType || '') === this.interfaceType)) {
+        const modName = reviseModName(mod.name);
+        mods[modName] = currMod;
+      }
 
       mods[indexFileName] = generator.getModsIndex.bind(generator);
     });
@@ -125,6 +135,7 @@ export class FileStructures {
     return result;
   }
 
+  /** 获取文件结构 */
   getFileStructures() {
     const result =
       this.usingMultipleOrigins || this.generators.length > 1
@@ -161,16 +172,14 @@ export class FileStructures {
   }
 
   getMultipleOriginsDataSourceName() {
-
     const dsNames = this.generators.map(ge => ge.dataSource.name);
 
     if (this.judgeHasMultipleFilesName()) {
       const generate = this.generators.find(ge => ge.outDir === this.baseDir);
 
       if (generate) {
-        return [generate.dataSource.name]
+        return [generate.dataSource.name];
       }
-
     }
 
     return dsNames;
@@ -179,7 +188,7 @@ export class FileStructures {
   judgeHasMultipleFilesName(): boolean {
     return this.generators.some(generate => {
       return generate.outDir !== this.baseDir;
-    })
+    });
   }
 
   getDataSourcesTs() {
@@ -209,10 +218,10 @@ export class FileStructures {
 
     return `
     ${dsNames
-        .map(name => {
-          return `/// <reference path="./${name}/api.d.ts" />`;
-        })
-        .join('\n')}
+      .map(name => {
+        return `/// <reference path="./${name}/api.d.ts" />`;
+      })
+      .join('\n')}
     `;
   }
 
@@ -221,7 +230,7 @@ export class FileStructures {
       // generators 长度大于1且outDir不相同时，需要拆分生成代码
       const hasMultipleOutDir = this.generators.some(generate => {
         return generate.outDir !== this.baseDir;
-      })
+      });
 
       let dataSources;
 
@@ -232,11 +241,7 @@ export class FileStructures {
         dataSources = this.generators.map(ge => ge.dataSource);
       }
 
-      return JSON.stringify(
-        dataSources,
-        null,
-        2
-      );
+      return JSON.stringify(dataSources, null, 2);
     }
   }
 }
@@ -248,7 +253,9 @@ export class CodeGenerator {
 
   hasContextBund = false;
 
-  constructor(public surrounding = Surrounding.typeScript, public outDir = '') { }
+  interfaceType = '';
+
+  constructor(public surrounding = Surrounding.typeScript, public outDir = '') {}
 
   setDataSource(dataSource: StandardDataSource) {
     this.dataSource = dataSource;
@@ -333,8 +340,8 @@ export class CodeGenerator {
     const mods = this.dataSource.mods;
     const content = `namespace ${this.dataSource.name || 'API'} {
         ${mods
-        .map(
-          mod => `
+          .map(
+            mod => `
           /**
            * ${mod.description}
            */
@@ -342,17 +349,17 @@ export class CodeGenerator {
             ${mod.interfaces.map(this.getInterfaceInDeclaration.bind(this)).join('\n')}
           }
         `
-        )
-        .join('\n\n')}
+          )
+          .join('\n\n')}
       }
     `;
 
     return content;
   }
 
-  getModsDeclarationWithMultipleOrigins() { }
+  getModsDeclarationWithMultipleOrigins() {}
 
-  getModsDeclarationWithSingleOrigin() { }
+  getModsDeclarationWithSingleOrigin() {}
 
   /** 获取公共的类型定义代码 */
   getCommonDeclaration() {
@@ -401,11 +408,11 @@ export class CodeGenerator {
       base => `
         class ${base.name} {
           ${base.properties
-          .map(prop => {
-            return prop.toPropertyCodeWithInitValue(base.name);
-          })
-          .filter(id => id)
-          .join('\n')}
+            .map(prop => {
+              return prop.toPropertyCodeWithInitValue(base.name);
+            })
+            .filter(id => id)
+            .join('\n')}
         }
       `
     );
@@ -457,13 +464,17 @@ export class CodeGenerator {
        * @description ${mod.description}
        */
       ${mod.interfaces
+        .filter(curInter => (curInter.interfaceType || '') === this.interfaceType)
         .map(inter => {
           return `import * as ${inter.name} from './${inter.name}';`;
         })
         .join('\n')}
 
       export {
-        ${mod.interfaces.map(inter => inter.name).join(', \n')}
+        ${mod.interfaces
+          .filter(curInter => (curInter.interfaceType || '') === this.interfaceType)
+          .map(inter => inter.name)
+          .join(', \n')}
       }
     `;
   }
@@ -480,13 +491,17 @@ export class CodeGenerator {
     if (this.dataSource.name) {
       conclusion = `
         export const ${this.dataSource.name} = {
-          ${this.dataSource.mods.map(mod => reviseModName(mod.name)).join(', \n')}
+          ${this.dataSource.mods
+            .filter(curMod => curMod.interfaces.some(inter => (inter.interfaceType || '') === this.interfaceType))
+            .map(mod => reviseModName(mod.name))
+            .join(', \n')}
         };
       `;
     }
 
     return `
       ${this.dataSource.mods
+        .filter(curMod => curMod.interfaces.some(inter => (inter.interfaceType || '') === this.interfaceType))
         .map(mod => {
           const modName = reviseModName(mod.name);
           return `import * as ${modName} from './${modName}';`;
@@ -514,7 +529,7 @@ export class FilesManager {
   report = info;
   prettierConfig: {};
 
-  constructor(public fileStructures: FileStructures, private baseDir: string) { }
+  constructor(public fileStructures: FileStructures, private baseDir: string) {}
 
   /** 初始化清空路径 */
   private initPath(path: string) {

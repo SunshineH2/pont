@@ -71,6 +71,7 @@ export class DataSourceConfig {
   templateType = '';
   surrounding = Surrounding.typeScript;
   outDir = 'src/service';
+  interfaceType? = '';
   transformPath = '';
   fetchMethodPath = '';
   prettierConfig: ResolveConfigOptions = {};

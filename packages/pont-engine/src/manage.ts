@@ -203,11 +203,8 @@ export class Manager {
       });
       return localDataStr;
     } catch (error) {
-      return ''
+      return '';
     }
-
-
-
   }
 
   async readLocalDataSource() {
@@ -401,6 +398,7 @@ export class Manager {
       const generator: CodeGenerator = new Generator(this.currConfig.surrounding, config?.outDir);
       generator.setDataSource(dataSource);
       generator.usingMultipleOrigins = this.currConfig.usingMultipleOrigins;
+      generator.interfaceType = this.currConfig.interfaceType;
 
       if (_.isFunction(generator.getDataSourceCallback)) {
         generator.getDataSourceCallback(dataSource);
@@ -419,7 +417,8 @@ export class Manager {
         this.currConfig.usingMultipleOrigins,
         this.currConfig.surrounding,
         this.currConfig.outDir,
-        this.currConfig.templateType
+        this.currConfig.templateType,
+        this.currConfig.interfaceType
       ),
       this.currConfig.outDir
     );

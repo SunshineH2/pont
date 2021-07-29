@@ -30,6 +30,12 @@ const promptList = [
     default: './pontTemplate'
   },
   {
+    type: 'input',
+    message: '请确认是否需要开启接口过滤',
+    name: 'interfaceType',
+    default: ''
+  },
+  {
     type: 'confirm',
     message: '是否使用内置模板？',
     name: 'useTemplate'
@@ -87,7 +93,7 @@ export async function generatePontConfig() {
 }
 
 function generateConfig(configPath: string, answers: any) {
-  const { originUrl, templatePath, outDir, enableMocks } = answers;
+  const { originUrl, templatePath, outDir, enableMocks, interfaceType } = answers;
   const dirName = path.join(process.cwd(), '/pont-config.json');
   let config = {} as DataSourceConfig;
   if (configPath) {
@@ -103,6 +109,7 @@ function generateConfig(configPath: string, answers: any) {
   config.originUrl = originUrl;
   config.templatePath = templatePath;
   config.outDir = outDir;
+  config.interfaceType = interfaceType;
   config.surrounding = Surrounding.javaScript;
   config.mocks = {
     enable: enableMocks

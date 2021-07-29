@@ -44,7 +44,7 @@ export class OriginBaseReader {
   }
 
   /** 数据转换，可覆盖 */
-  transform2Standard(data, _usingOperationId: boolean, _originName: string) {
+  transform2Standard(data, _usingOperationId: boolean, _originName: string, _interfaceType: string) {
     return data;
   }
 
@@ -80,7 +80,12 @@ export class OriginBaseReader {
       const data = await this.fetchData();
 
       // 将数据源转换为标准数据源格式
-      let remoteDataSource = this.transform2Standard(data, this.config.usingOperationId, this.config.name);
+      let remoteDataSource = this.transform2Standard(
+        data,
+        this.config.usingOperationId,
+        this.config.name,
+        this.config.interfaceType || ''
+      );
       this.report('远程数据解析完毕!');
 
       // 如果用户配置了数据的自定义转换方法、如接口过滤等

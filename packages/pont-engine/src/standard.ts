@@ -353,6 +353,7 @@ export class Property extends Contextable {
 
 export class Interface extends Contextable {
   consumes: string[];
+  interfaceType?: string;
   parameters: Property[];
   description: string;
   response: StandardDataType;

@@ -19,6 +19,11 @@
       "type": "string",
       "default": "./services"
     },
+    "interfaceType": {
+      "description": "whether to enable interface filtering",
+      "type": "string",
+      "default": ""
+    },
     "originUrl": {
       "$ref": "#/definitions/originUrl"
     },
@@ -63,6 +68,11 @@
           "type": "string",
           "default": "",
           "description": "接口基础路径"
+        },
+        "containDataSources": {
+          "type": "array",
+          "default": [],
+          "description": "配置哪几个数据源开启 mock 服务, 值类型就是配置的 origins 中的 name"
         }
       }
     },
