@@ -459,7 +459,7 @@ export function parseSwaggerV3Mods(
       const samePath = getMaxSamePath(modInterfaces.map(inter => inter.path.slice(1)));
 
       const standardInterfaces = modInterfaces
-        .filter(item => item.interfaceType === interfaceType)
+        .filter(item => (item.interfaceType || '') === interfaceType)
         .map(inter => {
           return SwaggerInterface.transformSwaggerV3Interface2Standard(inter, usingOperationId, samePath, defNames);
         });
@@ -566,7 +566,7 @@ export function parseSwaggerMods(
       const samePath = getMaxSamePath(modInterfaces.map(inter => inter.path.slice(1)));
 
       const standardInterfaces = modInterfaces
-        .filter(item => item.interfaceType === interfaceType)
+        .filter(item => (item.interfaceType || '') === interfaceType)
         .map(inter => {
           return SwaggerInterface.transformSwaggerInterface2Standard(
             inter,
