@@ -94,12 +94,14 @@ export class FileStructures {
       const currMod = {};
 
       mod.interfaces
-        .filter(curInter => (curInter.interfaceType || '') === this.interfaceType)
+        .filter(curInter => this.interfaceType === '' || this.interfaceType === (curInter.interfaceType || ''))
         .forEach(inter => {
           currMod[getFileName(inter.name, this.surrounding)] = generator.getInterfaceContent.bind(generator, inter);
           currMod[indexFileName] = generator.getModIndex.bind(generator, mod);
         });
-      if (mod.interfaces.some(inter => (inter.interfaceType || '') === this.interfaceType)) {
+      if (
+        mod.interfaces.some(inter => this.interfaceType === '' || this.interfaceType === (inter.interfaceType || ''))
+      ) {
         const modName = reviseModName(mod.name);
         mods[modName] = currMod;
       }
@@ -464,7 +466,7 @@ export class CodeGenerator {
        * @description ${mod.description}
        */
       ${mod.interfaces
-        .filter(curInter => (curInter.interfaceType || '') === this.interfaceType)
+        .filter(curInter => this.interfaceType === '' || this.interfaceType === (curInter.interfaceType || ''))
         .map(inter => {
           return `import * as ${inter.name} from './${inter.name}';`;
         })
@@ -472,7 +474,7 @@ export class CodeGenerator {
 
       export {
         ${mod.interfaces
-          .filter(curInter => (curInter.interfaceType || '') === this.interfaceType)
+          .filter(curInter => this.interfaceType === '' || this.interfaceType === (curInter.interfaceType || ''))
           .map(inter => inter.name)
           .join(', \n')}
       }
@@ -492,7 +494,11 @@ export class CodeGenerator {
       conclusion = `
         export const ${this.dataSource.name} = {
           ${this.dataSource.mods
-            .filter(curMod => curMod.interfaces.some(inter => (inter.interfaceType || '') === this.interfaceType))
+            .filter(curMod =>
+              curMod.interfaces.some(
+                inter => this.interfaceType === '' || this.interfaceType === (inter.interfaceType || '')
+              )
+            )
             .map(mod => reviseModName(mod.name))
             .join(', \n')}
         };
@@ -501,7 +507,11 @@ export class CodeGenerator {
 
     return `
       ${this.dataSource.mods
-        .filter(curMod => curMod.interfaces.some(inter => (inter.interfaceType || '') === this.interfaceType))
+        .filter(curMod =>
+          curMod.interfaces.some(
+            inter => this.interfaceType === '' || this.interfaceType === (inter.interfaceType || '')
+          )
+        )
         .map(mod => {
           const modName = reviseModName(mod.name);
           return `import * as ${modName} from './${modName}';`;

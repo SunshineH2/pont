@@ -459,7 +459,7 @@ export function parseSwaggerV3Mods(
       const samePath = getMaxSamePath(modInterfaces.map(inter => inter.path.slice(1)));
 
       const standardInterfaces = modInterfaces
-        .filter(item => (item.interfaceType || '') === interfaceType)
+        .filter(item => interfaceType === '' || interfaceType === (item.interfaceType || ''))
         .map(inter => {
           return SwaggerInterface.transformSwaggerV3Interface2Standard(inter, usingOperationId, samePath, defNames);
         });
@@ -566,7 +566,7 @@ export function parseSwaggerMods(
       const samePath = getMaxSamePath(modInterfaces.map(inter => inter.path.slice(1)));
 
       const standardInterfaces = modInterfaces
-        .filter(item => (item.interfaceType || '') === interfaceType)
+        .filter(item => interfaceType === '' || interfaceType === (item.interfaceType || ''))
         .map(inter => {
           return SwaggerInterface.transformSwaggerInterface2Standard(
             inter,
@@ -676,7 +676,6 @@ const findAllClasses = (baseClasses: BaseClass[], mods: Mod[]) => {
   filterRound2BaseClasses.forEach(item => {
     item.properties.forEach(i => {
       if (i.dataType.isDefsType) {
-        console.log(i.dataType.typeName, '33333');
         round3UsedBaseClasses.push(i.dataType.typeName);
       }
       if (i.dataType.typeArgs.length > 0) {
@@ -691,8 +690,6 @@ const findAllClasses = (baseClasses: BaseClass[], mods: Mod[]) => {
   const _round3UsedBaseClasses = _.uniqBy(round3UsedBaseClasses, base => base);
   const filterRound3BaseClasses = _round3UsedBaseClasses.map(item => _baseClasses.find(i => i.name === item));
 
-  console.log(round3UsedBaseClasses, _round3UsedBaseClasses, 'round3UsedBaseClasses');
-  console.log(filterBaseClasses, filterRound2BaseClasses, filterRound3BaseClasses, '------');
   const result = [...filterBaseClasses, ...filterRound2BaseClasses, ...filterRound3BaseClasses];
   return _.uniqBy(result, base => base.name);
 };
