@@ -1,3 +1,428 @@
+v1.5.7 / 2023-02-07
+===================
+
+### 🐛 Bug Fixes
+
+- `pont-engine`
+  - 修复模板路径读取错误的问题
+
+
+### 💖 Thanks to
+
+- 芒星
+
+v1.5.6 / 2023-02-06
+===================
+
+### 🐛 Bug Fixes
+
+- `pont-engine`
+  - 修复存在多个pont-config时模板之间相互覆盖的问题
+
+
+### 💖 Thanks to
+
+- 芒星
+
+v1.5.5 / 2023-01-12
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复翻译失败问题
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+
+v1.5.4 / 2022-11-29
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复类型未引入问题
+  - Origin 配置中的 originType 属性被覆盖
+  - Generate中getBaseClassInDeclaration函数解析泛型问题
+  - 修复扩展的dataSource数据丢失
+  - 修复cmd 问题
+
+
+### 🚀 Features
+
+- `general`
+  - 修复对DataSource或者BassClass DataType扩展无效的问题
+
+
+### 💖 Thanks to
+
+- FrozenQ
+- fuying.yfy
+- liuwei
+- 芒星
+
+v1.5.3 / 2022-11-14
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复cmd路径问题
+  - 修复 api.d.ts 没有重新生成问题
+  - 修复 currentOriginManage 为空时错误
+  - 修复不存在 dataSource 时,代码生成报错
+
+
+### 🚀 Features
+
+- `general`
+  - 添加vscode抛出报错信息
+
+
+### 💖 Thanks to
+
+- fuying
+- fuying.yfy
+
+v1.5.2 / 2022-11-08
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复 modName 导出问题
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+
+v1.5.1 / 2022-11-08
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复 currentOriginManage 为空时错误
+  - 修复不存在 dataSource 时,代码生成报错
+  - 修复 baseClasss 导出问题
+  - 修复  usingOperationId 默认值问题
+  - 修复 mock 问题
+  - 修复远程数据源解析失败时,diff问题
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+
+v1.5.0 / 2022-11-04
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复生成单个数据源时会生成其他数据源文件
+  - 修复 usingOperationId 丢失问题
+  - 修复多数据源更新问题
+  - 修复 JSON 会被格式化问题
+  - 完善代码
+  - 修复 templatePath和transformPath 不存在时,没有默认值
+  - 修复自定义模板文件缓存问题
+  - 修复远程数据源不存在时代码生成问题
+  - 修复自定义代码块获取问题
+  - 完善template编译路径
+
+
+### 🚀 Features
+
+- `general`
+  - GetGeneratedFiles 添加错误日志上报
+  - Yarn lock
+  - 优化数据源切换逻辑
+  - 添加数据源不存在时提示
+  - 新增忽略 pont 升级按钮
+  - To#优化轮训逻辑
+  - Pont 支持从 node_modules 读取自定义模板文件
+  - Pont 功能优化
+  - 初步完成 pont 升级优化
+  - To#优化本地缓存逻辑
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+
+v1.4.0 / 2022-09-05
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复文档错误
+
+
+### 🚀 Features
+
+- `general`
+  - Template 支持导入其他文件
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+
+v1.3.3 / 2022-07-11
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - To#修复VSCode导入路径报错
+  - 自动同步 pont-engine 版本时报错
+  - Parameters 的参数名称取值错误
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+- liuwei
+
+v1.3.2 / 2022-06-28
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复模块和基类搜索错误
+  - SwaggerV3 参数中的 required 属性解析错误
+  - #313 SwaggerV3 中 requestBody 参数的类型永远是 any close
+  - SwaggerV3 无法解析 query 参数中的嵌套对象
+  - 🐛 修复 翻译失败后，提示的报错信息不正确 问题
+  - 🐛 修复 翻译时没能翻译带 / 的中文导致异常
+  - 修复基类搜索更新不生效问题
+- `commands/index.ts`
+  - 修复基类更新后,列表没有刷新的问题
+
+
+### 🚀 Features
+
+- `general`
+  - 完善 SwaggerInterface
+  - 添加npm自动更新
+  - 模块和基类添加搜索更新
+
+
+### 🏡 Chore
+
+- `deps`
+  - Bump eventsource from 1.0.7 to 1.1.1 in /examples/hooks-app
+
+
+### 💖 Thanks to
+
+- dependabot[bot]
+- dong
+- fuying.yfy
+- lirandong
+- liuwei
+
+v1.3.1 / 2022-04-18
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 🐛 修复 swagger V2 转换标准数据时，enum 数据丢失的问题
+  - 修复 SwaggerV3  parameters 里 typeName 为空的问题
+  - 🐛 修复 vscode 插入接口片段代码时发生的异常情况
+
+
+### 💖 Thanks to
+
+- cklwblove
+- neil
+
+v1.3.0 / 2022-04-12
+===================
+
+### 🐛 Bug Fixes
+
+- `general`
+  - 修复文档错误
+  - 修正文案
+  - 更正文案
+  - 修复this丢失问题
+  - 修复文件名错误
+  - CodeSnippet默认模板支持多数据源
+  - 修复插件Repository地址错误
+  - 修复初始化时没有进行diff计算
+- `pontorigins.ts`
+  - 修复不存在配置时,文件名展示为undefined
+
+
+### 🚀 Features
+
+- `general`
+  - Pont start 添加语言选择选项
+  - 修改创建提示
+  - 完善Pont VSCode 插件功能
+  - 移除无效配置
+  - 添加注释
+  - 完善插件逻辑
+  - 添加icon
+  - 完成项目初始引导
+- `pont-engine vscode-pont`
+  - 完成pont vscode 插件UI 升级
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+
+v1.2.0 / 2022-02-18
+===================
+
+### 🐛 Bug Fixes
+
+- `pont-engine`
+  - 修复spiltApiLock不生效的问题
+
+
+### 🚀 Features
+
+- `pont-engine vscode-pont`
+  - 修改codeSnippet位置
+  - 1.添加vscode插件代码块模板 2.工具栏底部添加呼出查询接口UI的快捷方式
+
+
+### 💅 Refactors
+
+- `scan`
+  - 重构scan命令,支持其他通用用法
+- `all`
+  - 修改manage.codeSnippet定义
+
+
+### 🏡 Chore
+
+- `release`
+  - Vsce 不需要发布npm
+
+
+### 💖 Thanks to
+
+- fuying.yfy
+- 芒星
+
+v1.1.1 / 2022-02-16
+===================
+
+### 🐛 Bug Fixes
+
+- `scan`
+  - Compatible with a null value
+- `readme`
+  - Md scannedPattern  transfer bug
+
+
+### 🚀 Features
+
+- `all`
+  - 新增配置spiltApiLock(是否拆分api-lock.json,默认关闭)便于用户平 滑升级
+
+
+### 🏡 Chore
+
+- `deps`
+  - Bump follow-redirects from 1.14.7 to 1.14.8
+  - Bump ajv from 6.10.2 to 6.12.6 in /examples/hooks-app
+  - Bump ajv from 6.10.2 to 6.12.6
+  - Bump postcss from 7.0.17 to 7.0.39 in /examples/hooks-app
+  - Bump node-fetch from 1.7.3 to 2.6.7
+  - Bump trim-off-newlines from 1.0.1 to 1.0.3
+  - Bump follow-redirects in /examples/hooks-app
+  - Bump follow-redirects from 1.9.0 to 1.14.7
+
+
+### 💖 Thanks to
+
+- dependabot[bot]
+- yehua.zy
+- 芒星
+
+v1.1.0 / 2022-02-14
+===================
+
+### 🐛 Bug Fixes
+
+- `scan`
+  - Compatible with a null value
+- `readme`
+  - Md scannedPattern  transfer bug
+
+
+### 🏡 Chore
+
+- `deps`
+  - Bump postcss from 7.0.17 to 7.0.39 in /examples/hooks-app
+  - Bump node-fetch from 1.7.3 to 2.6.7
+  - Bump trim-off-newlines from 1.0.1 to 1.0.3
+  - Bump follow-redirects in /examples/hooks-app
+  - Bump follow-redirects from 1.9.0 to 1.14.7
+
+
+### 💖 Thanks to
+
+- dependabot[bot]
+- yehua.zy
+
+v1.1.0-alpha.0 / 2022-02-07
+===================
+
+### 🐛 Bug Fixes
+
+- `pont-engine`
+  - #178 Fix deepDifBo tips fixes
+  - #244 修复单数据源的情况下设置originType失败的问题 fixes
+- `vscode-pont`
+  - #204 修复refresh mocks data 异常报错的问题 fixes
+- `general`
+  - 代码回退
+
+
+### 🚀 Features
+
+- `all`
+  - 多数据源场景，默认拆分api-lock.json到每个数据源目录下
+- `pont-engine`
+  - 更新Mod时关联更新bo（BaseClass）
+- `general`
+  - Rm package-json.lock
+  - Supplement configuration item 'scannedPattern' and rm comments
+  - Add scan cli to recognize unused api
+
+
+### 🏡 Chore
+
+- `general`
+  - #238 Update prettier version to fixes
+- `deps`
+  - Bump url-parse from 1.4.7 to 1.5.3
+  - Bump hosted-git-info in /examples/hooks-app
+  - Bump ini from 1.3.5 to 1.3.8 in /examples/hooks-app
+
+
+### 💖 Thanks to
+
+- Leon1Zhu
+- dependabot[bot]
+- mangxing
+- muren.zmr
+- 凌亦
+- 芒星
+
 v1.0.12 / 2020-12-30
 ===================
 

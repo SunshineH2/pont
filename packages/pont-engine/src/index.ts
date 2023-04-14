@@ -1,16 +1,26 @@
-export { Manager } from './manage';
-export { BaseClass, Interface, Mod, PrimitiveType, Property, StandardDataSource, StandardDataType } from './standard';
+/** new */
+
+export { CONFIG_FILE } from './constants';
+export { Surrounding } from './types/pontConfig';
+export { getTemplate } from './utils/templateHelp';
+export { PollingManage } from './utils/PollingManage';
+
+export { DataSourceConfig } from './main/Config';
+export { Manager } from './main/Manager';
+export { Config } from './main/Config';
+export { OriginManage } from './main/originManage';
+export { Logger } from './main/Logger';
+
+/** compatible */
+
+export { createManager } from './compatible/Manager';
 
 export {
-  Config,
-  DataSourceConfig,
-  createManager,
   format,
   getDuplicateById,
   getIdentifierFromOperatorId,
   getIdentifierFromUrl,
   getMaxSamePath,
-  getTemplate,
   hasChinese,
   lookForFiles,
   toDashCase,
@@ -19,8 +29,20 @@ export {
   transformCamelCase,
   transformDescription,
   transformModsName,
-  Surrounding
-} from './utils';
-export { CodeGenerator, FileStructures, FilesManager } from './generators/generate';
-export { diff, Model, removeCtx } from './diff';
-export { PontDictManager } from './LocalDictManager';
+  getFileName
+} from './compatible/utils';
+export { diff, Model, removeCtx } from './compatible/diff';
+export {
+  BaseClass,
+  Interface,
+  Mod,
+  PrimitiveType,
+  Property,
+  StandardDataSource,
+  StandardDataType
+} from './compatible/standard';
+export { CodeGenerator, FileStructures, FilesManager } from './compatible/generators/generate';
+
+/** deprecated */
+
+export { PontDictManager } from './deprecated/LocalDictManager';
