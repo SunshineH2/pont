@@ -1,4 +1,4 @@
-import { Interface, BaseClass, Property, CodeGenerator } from 'pont-engine';
+import { Interface, BaseClass, Property, CodeGenerator } from '@td-design/pont-engine';
 
 export default class MyGenerator extends CodeGenerator {
   getInterfaceContentInDeclaration(inter: Interface) {
