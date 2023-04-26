@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as debugLog from './debugLog';
 import { main } from './scan';
+import { clean } from './clean';
 import { generatePontConfig } from './scripts/start';
 import { createManager } from './Manager';
 
@@ -132,6 +133,13 @@ function assert(expression: boolean, message: string) {
       .description('扫描废弃接口')
       .action(() => {
         main(manager);
+      });
+
+    program
+      .command('clean')
+      .description('删除多余接口')
+      .action(() => {
+        clean(manager);
       });
 
     program.parse(process.argv);

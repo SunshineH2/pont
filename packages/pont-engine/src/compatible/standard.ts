@@ -359,6 +359,8 @@ export class Interface<T = any> extends Contextable<T> {
   method: string;
   name: string;
   path: string;
+  originName?: string;
+  modName?: string;
 
   get responseType() {
     return this.response.generateCode(this.getDsName());
@@ -449,6 +451,7 @@ export class Mod<T = any> extends Contextable<T> {
   description: string;
   interfaces: Interface[];
   name: string;
+  originName?: string;
 
   setContext(context: any) {
     super.setContext(context);

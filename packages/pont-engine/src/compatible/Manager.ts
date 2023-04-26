@@ -20,6 +20,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0 as any;
 export class Manager {
   /** @deprecated */
   readonly lockFilename = 'api-lock.json';
+  readonly unusedJsonFileName = 'unusedRequests.json';
 
   /** @deprecated */
   configDir: string;
