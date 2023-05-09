@@ -1,4 +1,4 @@
-import { Interface, BaseClass, Property, CodeGenerator } from 'pont-engine';
+import { Interface, BaseClass, Property, CodeGenerator } from '@td-design/pont-engine';
 
 export default class MyGenerator extends CodeGenerator {
   getInterfaceContentInDeclaration(inter: Interface) {
@@ -35,7 +35,7 @@ export default class MyGenerator extends CodeGenerator {
   getBaseClassInDeclaration(base: BaseClass) {
     const originProps = base.properties;
 
-    base.properties = base.properties.map(prop => {
+    base.properties = base.properties.map((prop) => {
       return new Property({
         ...prop,
         required: false

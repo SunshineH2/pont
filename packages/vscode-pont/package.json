@@ -1,9 +1,9 @@
 {
-  "name": "vscode-pont",
-  "displayName": "pont",
+  "name": "pont",
+  "displayName": "@td-design/pont",
   "description": "",
-  "version": "1.5.7",
-  "publisher": "jasonHzq",
+  "version": "1.1.1",
+  "publisher": "SunshineH2",
   "license": "MIT",
   "engines": {
     "vscode": "^1.24.0"
@@ -41,7 +41,7 @@
       },
       {
         "view": "pontOrigins",
-        "contents": "请安装或升级pont-engine \n [yarn add pont-engine](command:pont.installPontEngine?%7B%22type%22%3A%22yarn%22%7D) \n [npm i -D pont-engine](command:pont.installPontEngine?%7B%22type%22%3A%22npm%22%7D)",
+        "contents": "请安装或升级@td-design/pont-engine \n [yarn add @td-design/pont-engine](command:pont.installPontEngine?%7B%22type%22%3A%22yarn%22%7D) \n [npm i -D @td-design/pont-engine](command:pont.installPontEngine?%7B%22type%22%3A%22npm%22%7D)",
         "when": "pontContext.versionError",
         "enablement": "pontContext.isInit"
       },
@@ -229,7 +229,7 @@
     "cors": "^2.8.5",
     "fs-extra": "^7.0.1",
     "mockjs": "^1.0.1-beta3",
-    "pont-engine": "1.5.7",
+    "@td-design/pont-engine": "1.1.0",
     "typescript": "^4.8.3"
   },
   "devDependencies": {

@@ -1,11 +1,11 @@
 import * as fs from 'fs';
-import * as path from 'path';
+// import * as path from 'path';
 import * as debugLog from './debugLog';
 import type { Manager } from './Manager';
 import type { Interface } from './standard';
 
 /** 内部方法，递归扫描文件夹 */
-function readDirRecursively(dirPath, callback) {
+function readDirRecursively(dirPath: fs.PathLike, callback: (path: fs.PathLike) => void) {
   fs.readdirSync(dirPath).forEach((subPath) => {
     const currentPath = dirPath + '/' + subPath;
     const stat = fs.lstatSync(currentPath);
@@ -20,7 +20,7 @@ function readDirRecursively(dirPath, callback) {
 /** 入口方法 */
 export function main(manager: Manager) {
   debugLog.info('service scanning...');
-  const rootPath = process.cwd();
+  // const rootPath = process.cwd();
   const {
     currConfig,
     allLocalDataSources,
@@ -32,17 +32,28 @@ export function main(manager: Manager) {
   /** 全量接口数组 */
   const allRequests = new Set<Interface>(
     allLocalDataSources
-      .map((ds) => ds.mods)
+      .map((ds) =>
+        ds.mods.map((i) => {
+          i.originName = ds.name;
+          return i;
+        })
+      )
       .reduce((acc, cur) => [...acc, ...cur], [])
-      .map((mod) => mod.interfaces)
-      .reduce((acc, cur) => [...acc, ...cur], [])
+      .map((mod) =>
+        mod.interfaces.map((i) => {
+          i.originName = mod.originName;
+          i.modName = mod.name;
+          return i;
+        })
+      )
+      .reduce((acc, cur) => [...acc, ...cur], []) as any
   );
 
   /** 未被使用的接口数组 */
   const unusedRequests = new Set<Interface>(allRequests);
 
   /** 输出文件名 */
-  const outputFileName = './unusedRequests.json';
+  const outputFileName = `./${manager.unusedJsonFileName}`;
 
   currConfig.scannedRange.forEach((dir) => {
     readDirRecursively(dir, (currentPath) => {
@@ -59,12 +70,19 @@ export function main(manager: Manager) {
   fs.writeFileSync(
     outputFileName,
     JSON.stringify(
-      [...unusedRequests].map(({ method, path, description }) => ({ method, path, description })),
+      [...unusedRequests].map(({ method, path, description, originName, modName, name }) => ({
+        method,
+        path,
+        description,
+        originName,
+        modName,
+        name
+      })),
       null,
       2
     )
   );
 
   debugLog.info(`unused case percentage: ${unusedRequests.size} / ${allRequests.size}`);
-  debugLog.success(`done!\nunused file is outputted to ${path.resolve(rootPath, outputFileName)}`);
+  // debugLog.success(`done!\nunused file is outputted to ${path.resolve(rootPath, outputFileName)}`);
 }

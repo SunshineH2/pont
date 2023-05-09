@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { CONFIG_FILE, Manager, getFileName } from 'pont-engine';
+import { CONFIG_FILE, Manager, getFileName } from '@td-design/pont-engine';
 
 class PontOriginsProvider implements vscode.TreeDataProvider<OriginTreeItem> {
   manager: Manager;

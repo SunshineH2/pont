@@ -1,4 +1,4 @@
-import { Interface, Config, Manager, Logger, PollingManage } from 'pont-engine';
+import { Interface, Config, Manager, Logger, PollingManage } from '@td-design/pont-engine';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as child_process from 'child_process';
@@ -415,11 +415,13 @@ export class CommandCenter {
   async installPontEngine(params: { type: 'yarn' | 'npm' }) {
     const rootPath = workspace.rootPath;
     const useYarn = params?.type === 'yarn';
-    const cmd = useYarn ? `yarn add -D pont-engine@${pontEngineVersion}` : `npm i -D pont-engine@${pontEngineVersion}`;
+    const cmd = useYarn
+      ? `yarn add -D @td-design/pont-engine@${pontEngineVersion}`
+      : `npm i -D @td-design/pont-engine@${pontEngineVersion}`;
     try {
       child_process.execSync(cmd, { cwd: rootPath });
     } catch (error) {
-      window.showErrorMessage(`请手动执行 ${cmd} 命令，安装pont-engine ${pontEngineVersion} 版本`);
+      window.showErrorMessage(`请手动执行 ${cmd} 命令，安装@td-design/pont-engine ${pontEngineVersion} 版本`);
     }
   }
 

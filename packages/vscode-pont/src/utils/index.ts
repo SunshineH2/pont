@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
-import { Manager, Interface } from 'pont-engine';
+import { Manager, Interface } from '@td-design/pont-engine';
 import * as path from 'path';
 import * as fs from 'fs';
 const packageJson = require('../../package.json');
 
-export const pontEngineVersion = packageJson.dependencies['pont-engine'] as string;
+export const pontEngineVersion = packageJson.dependencies['@td-design/pont-engine'] as string;
 
 export function wait(ttl = 500) {
   return new Promise((resolve) => {
@@ -30,7 +30,7 @@ export async function showProgress(
 
 export function verifyPontEngineVersion() {
   const rootPath = vscode.workspace.rootPath;
-  const projectVersionPath = path.join(rootPath, 'node_modules/pont-engine/package.json');
+  const projectVersionPath = path.join(rootPath, 'node_modules/@td-design/pont-engine/package.json');
   const hasProjectVersion = fs.existsSync(projectVersionPath);
 
   if (hasProjectVersion) {
