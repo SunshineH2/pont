@@ -98,8 +98,8 @@ function request(options) {
     timeout: options.timeout || 5000
   };
   var responseType = options.responseType || 'json';
-  return new Promise(function(resolve, reject) {
-    var req = (urlObj.protocol === 'https:' ? https.request : http.request)(httpOptions, function(res) {
+  return new Promise(function (resolve, reject) {
+    var req = (urlObj.protocol === 'https:' ? https.request : http.request)(httpOptions, function (res) {
       // 内置的翻译接口都以 200 作为响应码，所以不是 200 的一律视为错误
       if (res.statusCode !== 200) {
         reject(getError('API_SERVER_ERROR' /* API_SERVER_ERROR */));
@@ -107,10 +107,10 @@ function request(options) {
       }
       res.setEncoding('utf8');
       var rawData = '';
-      res.on('data', function(chunk) {
+      res.on('data', function (chunk) {
         rawData += chunk;
       });
-      res.on('end', function() {
+      res.on('end', function () {
         // Node.js 端只支持 json，其余都作为 text 处理
         if (responseType === 'json') {
           try {
@@ -124,11 +124,11 @@ function request(options) {
         }
       });
     });
-    req.on('timeout', function() {
+    req.on('timeout', function () {
       req.abort();
       reject(getError('NETWORK_TIMEOUT' /* NETWORK_TIMEOUT */, '查询超时'));
     });
-    req.on('error', function(e) {
+    req.on('error', function (e) {
       reject(getError('NETWORK_ERROR' /* NETWORK_ERROR */, e.message));
     });
     req.end(body);
@@ -167,14 +167,14 @@ function getSign(t) {
       '' !== s[c] &&
         u.push.apply(
           u,
-          (function(t) {
+          (function (t) {
             if (Array.isArray(t)) return e(t);
           })((o = s[c].split(''))) ||
-            (function(t) {
+            (function (t) {
               if (('undefined' != typeof Symbol && null != t[Symbol.iterator]) || null != t['@@iterator'])
                 return Array.from(t);
             })(o) ||
-            (function(t, n) {
+            (function (t, n) {
               if (t) {
                 if ('string' == typeof t) return e(t, n);
                 var r = Object.prototype.toString.call(t).slice(8, -1);
@@ -188,7 +188,7 @@ function getSign(t) {
                 );
               }
             })(o) ||
-            (function() {
+            (function () {
               throw new TypeError(
                 'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
               );
@@ -203,10 +203,7 @@ function getSign(t) {
         u.slice(-10).join(''));
   }
   for (
-    var d = ''
-        .concat(String.fromCharCode(103))
-        .concat(String.fromCharCode(116))
-        .concat(String.fromCharCode(107)),
+    var d = ''.concat(String.fromCharCode(103)).concat(String.fromCharCode(116)).concat(String.fromCharCode(107)),
       h = (null !== r ? r : (r = window[d] || '') || '').split('.'),
       f = Number(h[0]) || 0,
       m = Number(h[1]) || 0,
@@ -232,27 +229,12 @@ function getSign(t) {
   for (
     var b = f,
       w =
-        ''
-          .concat(String.fromCharCode(43))
-          .concat(String.fromCharCode(45))
-          .concat(String.fromCharCode(97)) +
-        ''
-          .concat(String.fromCharCode(94))
-          .concat(String.fromCharCode(43))
-          .concat(String.fromCharCode(54)),
+        ''.concat(String.fromCharCode(43)).concat(String.fromCharCode(45)).concat(String.fromCharCode(97)) +
+        ''.concat(String.fromCharCode(94)).concat(String.fromCharCode(43)).concat(String.fromCharCode(54)),
       k =
-        ''
-          .concat(String.fromCharCode(43))
-          .concat(String.fromCharCode(45))
-          .concat(String.fromCharCode(51)) +
-        ''
-          .concat(String.fromCharCode(94))
-          .concat(String.fromCharCode(43))
-          .concat(String.fromCharCode(98)) +
-        ''
-          .concat(String.fromCharCode(43))
-          .concat(String.fromCharCode(45))
-          .concat(String.fromCharCode(102)),
+        ''.concat(String.fromCharCode(43)).concat(String.fromCharCode(45)).concat(String.fromCharCode(51)) +
+        ''.concat(String.fromCharCode(94)).concat(String.fromCharCode(43)).concat(String.fromCharCode(98)) +
+        ''.concat(String.fromCharCode(43)).concat(String.fromCharCode(45)).concat(String.fromCharCode(102)),
       x = 0;
     x < g.length;
     x++
@@ -282,7 +264,7 @@ const getToken = async () => {
 };
 
 /** 识别语言种类 */
-const detect = async options => {
+const detect = async (options) => {
   let iso689lang;
   let query = (typeof options === 'string' ? options : options.text).slice(0, 73);
   const res: any = await request({
@@ -310,7 +292,7 @@ function getAudioURI(text, lang) {
 }
 
 /** 翻译 */
-const translate = async options => {
+const translate = async (options, token) => {
   const modifiedOptions = typeof options === 'string' ? { text: options } : options;
   let { from, to, text } = modifiedOptions || {};
   if (!from) {
@@ -327,7 +309,9 @@ const translate = async options => {
   }
 
   const sign = getSign(text);
-  const token = await getToken();
+  if (!token) {
+    token = await getToken();
+  }
   let params = {
     from: customFromLang,
     to: customToLang,
@@ -351,7 +335,7 @@ const translate = async options => {
 /**
  * 获取指定文本的网络语音地址
  */
-const audio = async options => {
+const audio = async (options) => {
   const modifiedOptions = typeof options === 'string' ? { text: options } : options;
   let { text, from } = modifiedOptions;
   let lang;
@@ -381,3 +365,4 @@ var index = /*#__PURE__*/ Object.freeze({
 });
 
 exports.baidu = index;
+exports.getToken = getToken;
