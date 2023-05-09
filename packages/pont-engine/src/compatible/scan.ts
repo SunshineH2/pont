@@ -55,18 +55,9 @@ export function main(manager: Manager) {
   /** 输出文件名 */
   const outputFileName = `./${manager.unusedJsonFileName}`;
 
-  debugLog.success(
-    currConfig.scannedRange.toString() +
-      '--a--' +
-      currConfig.outDir.toString() +
-      '--b--' +
-      currConfig.templatePath.toString()
-  );
-
   currConfig.scannedRange.forEach((dir) => {
     readDirRecursively(dir, (currentPath) => {
       const fileContent = fs.readFileSync(currentPath).toString();
-      // debugLog.info(fileContent.length + '');
       unusedRequests.forEach((inter: Interface) => {
         const useCases = getApiUseCases(inter);
         if (useCases.some((useCase) => fileContent.includes(useCase))) {
