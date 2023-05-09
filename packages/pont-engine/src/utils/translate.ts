@@ -49,7 +49,7 @@ function startCaseClassName(result) {
   return wordArray.join('');
 }
 
-export async function translate(rootDir, text: string, engineIndex = 0) {
+export async function translate(rootDir, text: string, engineIndex = 0, token = '') {
   if (!dicPath[rootDir]) {
     init(rootDir);
   }
@@ -67,7 +67,7 @@ export async function translate(rootDir, text: string, engineIndex = 0) {
   let index = engineIndex;
 
   try {
-    let res = await engines[index].translate(text);
+    let res = await engines[index].translate(text, token);
     enKey = startCaseClassName(res.trans_result.data[0].dst);
 
     assert.ok(enKey);
@@ -75,7 +75,7 @@ export async function translate(rootDir, text: string, engineIndex = 0) {
     appendToDict(rootDir, { cn: text, en: enKey });
     return enKey;
   } catch (err) {
-    return translate(rootDir, text, index + 1);
+    return translate(rootDir, text, index + 1, token);
   }
 }
 
