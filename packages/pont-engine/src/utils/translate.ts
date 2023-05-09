@@ -8,9 +8,9 @@ import * as _ from 'lodash';
 import { PontFileManager } from './PontFileManager';
 import { TRANSLATE_DICT_NAME } from '../constants';
 
-const { youdao, baidu, google } = require('translation.js');
+const { baidu } = require('../thirdParty/translation.js/index');
 
-const engines = [google, youdao, baidu];
+const engines = [baidu];
 let dict: { [rootDir: string]: { [cn: string]: string } } = {};
 let dicPath: { [rootDir: string]: string } = {};
 
@@ -68,7 +68,7 @@ export async function translate(rootDir, text: string, engineIndex = 0) {
 
   try {
     let res = await engines[index].translate(text);
-    enKey = startCaseClassName(res.result[0]);
+    enKey = startCaseClassName(res.trans_result.data[0].dst);
 
     assert.ok(enKey);
 
